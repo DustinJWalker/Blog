@@ -20,39 +20,24 @@
 
   <body>
 
-    <div class="collapse bg-inverse" id="navbarHeader">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-8 py-4">
-            <h4 class="text-white">About</h4>
-            <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
-          </div>
-          <div class="col-sm-4 py-4">
-            <h4 class="text-white">Contact</h4>
-            <ul class="list-unstyled">
-              <li><a href="#" class="text-white">Follow on Twitter</a></li>
-              <li><a href="#" class="text-white">Like on Facebook</a></li>
-              <li><a href="#" class="text-white">Email me</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
     @include('layouts.nav')
 
+      <div class="blog-header">
+        <div class="container">
+          <h1 class="blog-title">My Blog</h1>
+          <p class="lead blog-description">An example blog template built with Bootstrap</p>
+        </div>
+      </div>
 
+      <div class="container">
+        <div class="row">
+          @yield ('content')
+
+          @include ('layouts.sidebar')
+        </div>
+      </div>
     
-
-<div class>
-        @yield('content')
-</div>
         @include ('layouts.footer')
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
