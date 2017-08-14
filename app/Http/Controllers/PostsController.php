@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Post;
 
 class PostController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
     //setting up view
     public function index() 
     {
@@ -29,8 +31,11 @@ class PostController extends Controller
             'title' => 'required',
             'body' => 'required'
         ]);
+
+        auth()->user()->publish(
+            new Post(request(['title', 'body']))
+        );
           //create a new post using the request data
-        Post::create(request(['title', 'body']));
         //redirect to main page
         return redirect('/');
     }
