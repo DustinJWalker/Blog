@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use Carbon\Carbon;
 
 class PostController extends Controller
 {
@@ -12,8 +13,20 @@ class PostController extends Controller
     //setting up view
     public function index() 
     {
-        $posts = Post::latest()->get();
-        return view('posts.index', compact('posts'));
+        $posts = Post::latest()
+        ->filter(request(['month', 'year']))
+        // $posts = Post::latest();
+
+
+        // $posts = $posts->();
+
+        
+        $archives = Post::selectRaw('year(created_at) year, monthname(created_at) month, count(*) published')
+        ->groupBy('year', 'month')
+        ->orderBy('min'('created_at'))
+        ->get()
+        ->toArray();
+        return view('posts.index', compact('posts', 'archives'));
     }
 
         public function show(Post $post) 
