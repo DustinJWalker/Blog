@@ -10,7 +10,8 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
-    public function error() {
+    public function error() 
+    {
         return $this->belongsTo(User::class);
     }
     public function addComment($body) 
@@ -18,14 +19,26 @@ class Post extends Model
         $this->comments()->create(compact('body'));
     } 
 
-    public function scopeFilter($query, $filters) {
-                if ($month = $filters('month')) {
+    public function scopeFilter($query, $filters) 
+    {
+                if ($month = $filters('month'))
+                 {
             $posts->whereMonth('created_at', Carbon::parse($month)->month);
         }
 
-        if ($year = $filters('year')) {
+        if ($year = $filters('year')) 
+        {
             $posts->whereYear('created_at', $year);
         }
 
+    }
+
+
+    public static archives() {
+      return static::selectRaw('year(created_at) year, monthname(created_at) month, count(*) publised')
+        ->groupBy('year', 'month')
+        ->orderByRaw('min(created_at) desc')
+        ->get()
+        ->toArray();
     }
 }
