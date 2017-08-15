@@ -1,7 +1,8 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
+use App\Post;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -16,8 +17,13 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $response = $this->get('/');
+        $first = factory(Post::class)->create();
+        $second = factory(Post::class)->creat([
+            'created_at' => \Carbon\Carbon::now()->subMonth()
+        ]);
 
-        $response->assertStatus(200);
+        Post::archives();
+
+        $this->assertCount(2, $posts)
     }
 }
